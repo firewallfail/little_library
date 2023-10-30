@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  server: #Hostname
+    container_name: little_library
+    build: .
+    ports:
+      - "8000:5000"
+    volumes:
+      - ./server/src:/app
+
+    restart: unless-stopped
