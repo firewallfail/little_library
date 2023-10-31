@@ -9,11 +9,12 @@ from flask import Blueprint
 from flask import request
 from flask import g
 from flask import session
-from flask import send_file
 
 from api.helpers import token_required, required_params
+from db.db import Database
 
 api = Blueprint('api', __name__)
+db = Database()
 
 @api.errorhandler(Exception)
 def server_error(err):
@@ -27,7 +28,7 @@ def before_request():
     form_params = request.form.copy() or {}
     file_params = request.files.copy() or {}
     g.params = {**query_params, **body_params, **form_params, **file_params}
-    # g.db_conn = db.connect()
+    g.db_conn = db.connect()
 
 
 @api.teardown_request
