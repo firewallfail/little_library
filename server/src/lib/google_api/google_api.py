@@ -25,9 +25,8 @@ class googleBooks():
             list: list of all books found and parsed
         """
         books = self.connection.list(q=query).execute()
-        logging.info('Raw google book response: ', raw=books)
         if not books or not len(books.get('items', [])):
-            return books, CONST.ERRORS['BOOK_NOT_FOUND']
+            return [], CONST.ERRORS['BOOK_NOT_FOUND']
         
         return self.build_books_response(books['items']), False
     
@@ -35,6 +34,7 @@ class googleBooks():
         books = []
         for book in book_list:
             volume_info = book.get('volumeInfo', {})
+            upc = volume_info.get('industryIdentifiers')[1].get('identifier') if len(volume_info.get('industryIdentifiers', [])) else ''
             books.append({
                 'title': volume_info.get('title'),
                 'sub_title': volume_info.get('subtitle'),
@@ -43,5 +43,7 @@ class googleBooks():
                 'description': volume_info.get('description'),
                 'page_count': volume_info.get('pageCount'),
                 'thumbnail': volume_info.get('imageLinks', {}).get('thumbnail'),
+                'count': 0,
+                'upc': upc
             })
         return books

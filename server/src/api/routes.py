@@ -111,7 +111,12 @@ def user_delete():
 
 @api.route('/book/scan/<barcode>')
 def get_book_from_barcode(barcode):
-    book, err = books.barcode_lookup(barcode)
+    book, err = books.barcode_lookup(barcode, g.db_conn)
     if not err:
         return helpers.success(book[0])
     return helpers.failure(res='failed to retrieve book', status=err)
+
+
+@api.route('/book/search/<query>')
+def get_book_from_query(query):
+    return helpers.failure(res='failed to retrieve books')

@@ -17,10 +17,13 @@ class Database:
         except Exception as e:
             logging.error(f"Exception creating db connection: {e}")
 
-    def write_db(self, conn, query, params, get_update_row_count=False, auto_commit=True):
+    def write_db(self, conn, query, params, get_update_row_count=False, auto_commit=True, multi_insert=False):
         try:
             with conn.cursor(buffered=True) as cur:
-                cur.execute(query, params)
+                if multi_insert:
+                    cur.executemany(query, params)
+                else:
+                    cur.execute(query, params)
                 if auto_commit:
                     conn.commit()
                 result = cur.lastrowid
