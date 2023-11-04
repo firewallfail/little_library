@@ -59,6 +59,15 @@ def token_required(f):
     return decorator
 
 
+def admin_only(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        if not g.user['is_admin']:
+            return failure(res='not authorized', status_code=401)
+        return f(*args, **kwargs)
+    return decorator
+
+
 def required_params(*required):
     def wrapper(f):
         @wraps(f)
