@@ -34,7 +34,16 @@ class googleBooks():
         books = []
         for book in book_list:
             volume_info = book.get('volumeInfo', {})
-            upc = volume_info.get('industryIdentifiers')[1].get('identifier') if len(volume_info.get('industryIdentifiers', [])) else ''
+
+            # skip any books that don't have an ISBN13 code
+            upc = None
+            for identifier in volume_info.get('industryIdentifiers', []):
+                if identifier.get('type') == 'ISBN_13':
+                    upc = identifier.get('identifier')
+                    break
+            if not upc:
+                continue
+
             books.append({
                 'title': volume_info.get('title'),
                 'sub_title': volume_info.get('subtitle'),

@@ -26,7 +26,7 @@ def upgrade() -> None:
         published_date VARCHAR(255),
         description TEXT,
         page_count INT,
-        upc VARCHAR(255) NOT NULL,
+        upc VARCHAR(255) UNIQUE NOT NULL,
         thumbnail VARCHAR(255),
         count TINYINT UNSIGNED NOT NULL,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

@@ -111,12 +111,25 @@ def user_delete():
 
 @api.route('/book/scan/<barcode>')
 def get_book_from_barcode(barcode):
-    book, err = books.barcode_lookup(barcode, g.db_conn)
-    if not err:
-        return helpers.success(book[0])
-    return helpers.failure(res='failed to retrieve book', status=err)
+    book_list, err = books.barcode_lookup(barcode, g.db_conn)
+    if err:
+        return helpers.failure(res='failed to retrieve book', status=err)
+    return helpers.success(book_list[0])
 
 
-@api.route('/book/search/<query>')
-def get_book_from_query(query):
-    return helpers.failure(res='failed to retrieve books')
+@api.route('/book/search')
+@required_params('query')
+def get_books_from_query():
+    book_list, err = books.query_lookup(g.params['query'], g.db_conn)
+    if err:
+        return helpers.failure(res='failed to retrieve book', status=err)
+    return helpers.success(book_list)
+
+
+@api.route('/book/<barcode>/change-count', methods=['PATCH'])
+@required_params('count')
+def update_book_count(barcode):
+    res, err = books.update_book_count(g.db_conn, barcode, g.params['count'])
+    if err:
+        return helpers.failure(res='failed to update book count', status=err)
+    return helpers.success({})
