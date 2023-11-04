@@ -26,7 +26,7 @@ def do_register(db_conn, creds):
 
 
 def do_login(db_conn, creds):
-    query = """SELECT id, public_id, email, password, username, created_at
+    query = """SELECT id, public_id, email, password, username, is_admin, created_at
                 FROM user
                 WHERE username = %(username)s"""
     params = {
