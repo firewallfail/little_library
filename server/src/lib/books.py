@@ -69,3 +69,21 @@ def update_book_count(db_conn, barcode, count):
     if not res:
         return res, CONST.ERRORS['UPDATE_COUNT_FAIL']
     return res, None
+
+
+def get_local_books(db_conn, order_by='updated_at', offset=0, limit=50):
+    query = """SELECT title, sub_title, authors, published_date, description, page_count, upc, thumbnail, count
+                FROM book
+                WHERE count >= 1
+                ORDER BY %(order_by)s DESC
+                LIMIT %(limit)s
+                OFFSET %(offset)s;"""
+    params = {
+        'order_by': order_by,
+        'limit': limit,
+        'offset': offset
+    }
+    res = db.read_db(db_conn, query, params)
+    if not res:
+        return res, CONST.ERRORS['BOOKS_NOT_FOUND']
+    return res, None

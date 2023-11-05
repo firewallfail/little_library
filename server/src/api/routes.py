@@ -133,3 +133,11 @@ def update_book_count(barcode):
     if err:
         return helpers.failure(res='failed to update book count', status=err)
     return helpers.success({})
+
+
+@api.route('/books')
+def get_books():
+    books_list, err = books.get_local_books(g.db_conn)
+    if err:
+        return helpers.failure(res='failed to retrieve local books', status=err)
+    return helpers.success(books_list)

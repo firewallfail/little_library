@@ -16,6 +16,7 @@ NO_UPDATE_NEEDED = -1
 
 # Errors
 ERRORS = {
+    'BOOKS_NOT_FOUND': 19,
     'BOOK_NOT_FOUND': 20,
     'UPDATE_COUNT_FAIL': 21
 }
