@@ -31,6 +31,14 @@ class googleBooks():
         return self.build_books_response(books['items']), False
     
     def build_books_response(self, book_list):
+        """parse a list of books from google to match my db format
+
+        Args:
+            book_list (list): list of books from google
+
+        Returns:
+            list: list of parsed books
+        """
         books = []
         for book in book_list:
             volume_info = book.get('volumeInfo', {})

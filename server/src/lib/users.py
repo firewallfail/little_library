@@ -18,7 +18,7 @@ def do_register(db_conn, creds):
         "email": creds.get('email', ''),
         "username": creds['username'],
         "password": passhash
-        }
+    }
 
     result = db.write_db(db_conn, query, params)
     if result:

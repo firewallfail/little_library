@@ -32,6 +32,7 @@ services:
       DB_DATABASE: ${MYSQL_DATABASE}
       DB_HOSTNAME: ${DB_HOSTNAME}
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      SECRET_KEY: ${JWT_KEY}
     restart: unless-stopped
     depends_on:
       db:
