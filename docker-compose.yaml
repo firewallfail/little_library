@@ -21,11 +21,16 @@ services:
 
   server: #Hostname
     container_name: little_library
-    build: .
+    build: ./server
     ports:
       - "8000:5000"
     volumes:
       - ./server/src:/app
+    healthcheck:
+      test: "curl localhost:5000/api/health_check"
+      interval: 20s
+      timeout: 10s
+      retries: 5
     environment:
       DB_USERNAME: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
@@ -36,6 +41,22 @@ services:
     restart: unless-stopped
     depends_on:
       db:
+        condition: service_healthy
+        restart: true
+
+  client: #Hostname
+    container_name: little_library_client
+    build: ./client
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./client/public:/app/public
+      - ./client/src:/app/src
+    environment:
+      PORT: ${PORT}
+    restart: unless-stopped
+    depends_on:
+      server:
         condition: service_healthy
         restart: true
 
