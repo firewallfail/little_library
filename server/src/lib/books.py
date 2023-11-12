@@ -38,7 +38,7 @@ def add_books(book_list, db_conn):
     # any time I fall back to google for search add or update record in db
     query = """INSERT IGNORE INTO book (title, sub_title, authors, published_date, description, page_count, upc, thumbnail, count)
                 VALUES (%(title)s, %(sub_title)s, %(authors)s, %(published_date)s, %(description)s, %(page_count)s, %(upc)s, %(thumbnail)s, %(count)s)
-                ON DUPLICATE KEY UPDATE;
+                ON DUPLICATE KEY UPDATE updated_at=CURRENT_TIMESTAMP;
     """
 
     return db.write_db(db_conn, query, book_list, multi_insert=True)
