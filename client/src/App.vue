@@ -1,11 +1,10 @@
 <template>
-  <navbar></navbar>
-  <scanner></scanner>
+  <navbar />
+  <scanner />
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
-// import Register from '@/components/Register.vue'
 import Scanner from '@/components/Scanner.vue'
 
 export default {
