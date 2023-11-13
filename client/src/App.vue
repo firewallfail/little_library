@@ -1,6 +1,6 @@
 <template>
-  <navbar />
-  <scanner />
+  <navbar></navbar>
+  <scanner></scanner>
 </template>
 
 <script>

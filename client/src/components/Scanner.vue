@@ -1,16 +1,18 @@
 <template>
-  <div id="reader" style="width: 100%; height: 50%" class="video"></div>
-  <div v-if="barcode">
-    <button @click="search_book_barcode">
-      Look Up: {{ barcode }}
-    </button>
-  </div>
-  <div v-if="!book_found">
-    <input v-model="book_query" placeholder="Book Title"/>
-    <button v-if="book_query" @click="search_book_query">Look Up: {{ book_query }}</button>
-  </div>
-  <div v-if="book_found" v-for="book of book_list">
-    <BookCard :book="book" />
+  <div class="scanner">
+    <div id="reader" style="width: 100%; height: 50%; border: 1px solid black;" class="video"></div>
+    <div v-if="barcode">
+      <button @click="search_book_barcode">
+        Look Up: {{ barcode }}
+      </button>
+    </div>
+    <div v-if="!book_found">
+      <input v-model="book_query" placeholder="Book Title"/>
+      <button v-if="book_query" @click="search_book_query">Look Up: {{ book_query }}</button>
+    </div>
+    <div v-if="book_found" v-for="book of book_list">
+      <BookCard :book="book" />
+    </div>
   </div>
 </template>
   
@@ -79,5 +81,8 @@
 <style>
   .video {
     width: 100%;
+    background-color: #F1F7ED;
+    border: 10px solid black;
+    border-radius: 1rem;
   }
 </style>

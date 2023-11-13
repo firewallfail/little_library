@@ -14,18 +14,10 @@
   
   export default {
     name: "BookCard",
-    props: ['book'],
-    setup(props) {
-        console.log(props)
-    }
+    props: ['book']
 }
 </script>
 
 <style>
-  .book-card {
-    border: 5px solid black;
-    border-radius: 2rem;
-    padding: 2rem;
-    margin: 2rem;
-  }
+
 </style>
