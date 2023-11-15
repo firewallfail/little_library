@@ -1,6 +1,6 @@
 <template>
   <div class="scanner">
-    <div id="reader" style="width: 100%; height: 50%; border: 1px solid black;" class="video"></div>
+    <div id="reader" class="video"></div>
     <div v-if="barcode">
       <button @click="search_book_barcode">
         Look Up: {{ barcode }}
@@ -66,10 +66,10 @@
       }
     },
     mounted() {
-      let instance = this.$toast.open({message: 'test'});
+      // let instance = this.$toast.open({message: 'test'});
       let html5QrcodeScanner = new Html5QrcodeScanner("reader",
                                                       { fps: 10,
-                                                        qrbox: 400,
+                                                        qrbox: {width: 140, height: 100},
                                                         formatsToSupport: [ Html5QrcodeSupportedFormats.EAN_13 ]
                                                       }
                                                       );
@@ -82,7 +82,8 @@
   .video {
     width: 100%;
     background-color: #F1F7ED;
-    border: 10px solid black;
-    border-radius: 1rem;
+    outline: 5px solid black;
+    margin-bottom: 1rem;
+    /* border-radius: 1rem; */
   }
 </style>

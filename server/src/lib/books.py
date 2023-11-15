@@ -53,6 +53,12 @@ def query_lookup(query, db_conn):
 
     if not books_added:
         logging.error("Failed to add books")
+
+    barcodes = [book['upc'] for book in books]
+    local_books = get_books_by_barcode(db_conn, barcodes)
+    if local_books:
+        return local_books, None
+    
     return books, err
 
 
@@ -87,3 +93,25 @@ def get_local_books(db_conn, order_by='updated_at', offset=0, limit=50):
     if not res:
         return res, CONST.ERRORS['BOOKS_NOT_FOUND']
     return res, None
+
+
+def get_books_by_barcode(db_conn, barcodes, order_by='udpated_at'):
+    # this is so gross but I'm stumped, almost everything points back at an old as balls stack overflow answer that looks
+    # twice as janks so I give up and do the ugly
+    params = {
+        'order_by': order_by
+    }
+
+    query_start = """SELECT title, sub_title, authors, published_date, description, page_count, upc, thumbnail, count
+                FROM book
+                WHERE upc IN ("""
+    
+    for barcode in barcodes:
+        query_start += f"%({barcode})s,"
+        params[barcode] = barcode
+
+    query_start = query_start[:-1]  
+    query_end = """)
+                ORDER BY %(order_by)s DESC;"""
+    query = query_start + query_end
+    return db.read_db(db_conn, query, params)
