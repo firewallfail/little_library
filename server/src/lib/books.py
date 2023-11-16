@@ -63,8 +63,16 @@ def query_lookup(query, db_conn):
 
 
 def update_book_count(db_conn, barcode, count):
-    query = """UPDATE book
-                SET count = %(count)s
+    modifier = {
+        'add': '+',
+        'remove': '-'
+    }
+    change = modifier.get(count)
+    if not change:
+        return None, CONST.ERRORS['UPDATE_COUNT_FAIL']
+    
+    query = f"""UPDATE book
+                SET count = count {change} 1
                 WHERE upc = %(barcode)s"""
     params = {
         'count': count,
