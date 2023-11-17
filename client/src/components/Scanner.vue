@@ -7,8 +7,7 @@
       </button>
     </div>
     <div>
-      <input v-model="book_query" v-on:keyup="delayed_search_book_query" placeholder="Book Title"/>
-      <button v-if="book_query" @click="search_book_query">Look Up: {{ book_query }}</button>
+      <input v-model="book_query" v-on:keyup="delayed_search_book_query" placeholder="Search Books"/>
     </div>
     <div v-if="book_found" v-for="book of book_list">
       <BookCard :book="book" />
