@@ -1,9 +1,9 @@
 <template>
   <div class="navbar">
     <header>
-      <a href="#home">Home</a>
-      <a href="#news">News</a>
-      <a href="#contact">Contact</a>
+      <router-link to="/">Scan</router-link>
+      <router-link to="/books">Books</router-link>
+      <router-link to="/about">About</router-link>
     </header>
   </div>
 </template>
