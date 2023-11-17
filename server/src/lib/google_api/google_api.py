@@ -42,6 +42,9 @@ class googleBooks():
         books = []
         for book in book_list:
             volume_info = book.get('volumeInfo', {})
+            thumbnail = volume_info.get('imageLinks', {}).get('thumbnail')
+            if thumbnail:
+                thumbnail = thumbnail.replace('http://', 'https://')
 
             # skip any books that don't have an ISBN13 code
             upc = None
@@ -52,6 +55,7 @@ class googleBooks():
             if not upc:
                 continue
 
+
             books.append({
                 'title': volume_info.get('title'),
                 'sub_title': volume_info.get('subtitle'),
@@ -59,7 +63,7 @@ class googleBooks():
                 'published_date': volume_info.get('publishedDate'),
                 'description': volume_info.get('description'),
                 'page_count': volume_info.get('pageCount'),
-                'thumbnail': volume_info.get('imageLinks', {}).get('thumbnail'),
+                'thumbnail': thumbnail,
                 'count': 0,
                 'upc': upc
             })
