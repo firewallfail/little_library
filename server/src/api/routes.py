@@ -136,8 +136,9 @@ def update_book_count(barcode):
 
 
 @api.route('/books')
+@required_params('offset')
 def get_books():
-    books_list, err = books.get_local_books(g.db_conn)
+    books_list, err = books.get_local_books(g.db_conn, offset=g.params['offset'])
     if err:
         return helpers.failure(res='failed to retrieve local books', status=err)
     return helpers.success(books_list)
