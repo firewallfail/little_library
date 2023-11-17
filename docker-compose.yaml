@@ -54,6 +54,7 @@ services:
       - ./client/src:/app/src
     environment:
       PORT: ${PORT}
+      API: ${API}
     restart: unless-stopped
     depends_on:
       server:

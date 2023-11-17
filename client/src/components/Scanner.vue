@@ -6,8 +6,8 @@
         Look Up: {{ barcode }}
       </button>
     </div>
-    <div v-if="!book_found">
-      <input v-model="book_query" placeholder="Book Title"/>
+    <div>
+      <input v-model="book_query" v-on:keyup="delayed_search_book_query" placeholder="Book Title"/>
       <button v-if="book_query" @click="search_book_query">Look Up: {{ book_query }}</button>
     </div>
     <div v-if="book_found" v-for="book of book_list">
@@ -40,7 +40,7 @@
         console.log(`Scan result: ${decoded_text}`);
       },
       async search_book_barcode() {
-        const response = await fetch(`http://localhost:8000/api/book/scan/${this.barcode}`, {
+        const response = await fetch(`/api/book/scan/${this.barcode}`, {
           method: 'get',
           mode: 'cors',
           credentials: 'omit',
@@ -53,20 +53,28 @@
         this.book_found = true
       },
       async search_book_query() {
-        const response = await fetch('http://localhost:8000/api/book/search?' + new URLSearchParams({
+        const response = await fetch('/api/book/search?' + new URLSearchParams({
           query: this.book_query
         }), {
           method: 'get',
           mode: 'cors',
-          credentials: 'omit'
+          credentials: 'include'
         })
         const bookSearchResponse = await response.json()
         this.book_list = bookSearchResponse.data
         this.book_found = true
+      },
+      delayed_search_book_query() {
+        if (this.timer) {
+          clearTimeout(this.timer)
+          this.timer = null
+        }
+        this.timer = setTimeout(() => {
+          this.search_book_query()
+        }, 800)
       }
     },
     mounted() {
-      // let instance = this.$toast.open({message: 'test'});
       let html5QrcodeScanner = new Html5QrcodeScanner("reader",
                                                       { fps: 10,
                                                         qrbox: {width: 140, height: 100},
@@ -84,6 +92,6 @@
     background-color: #F1F7ED;
     outline: 5px solid black;
     margin-bottom: 1rem;
-    /* border-radius: 1rem; */
+    border-radius: 1rem;
   }
 </style>

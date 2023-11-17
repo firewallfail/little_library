@@ -12,9 +12,15 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  devServer: {
+  server: {
     https: true,
-    port: 8000,
-    proxy: "http://localhost:8000/api"
+    port: process.env.PORT,
+    proxy: {
+      "/api": {
+        target: process.env.API,
+        changeOrigin: true,
+        secure: false
+      }
+    }
   }
 })
