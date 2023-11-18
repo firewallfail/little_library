@@ -38,6 +38,7 @@ services:
       DB_HOSTNAME: ${DB_HOSTNAME}
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
       SECRET_KEY: ${JWT_KEY}
+      NTFY_URI: ${NTFY_URI}
     restart: unless-stopped
     depends_on:
       db:

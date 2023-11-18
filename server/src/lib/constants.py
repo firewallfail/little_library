@@ -12,6 +12,9 @@ DB_HOSTNAME = os.environ.get('DB_HOSTNAME')
 # Google stuff
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 
+# Other stuff
+NTFY_URI = os.environ.get('NTFY_URI')
+
 NO_UPDATE_NEEDED = -1
 
 # Errors

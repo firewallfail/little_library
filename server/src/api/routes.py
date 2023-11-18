@@ -1,6 +1,7 @@
 import json
 import jwt
 import logging
+import requests
 
 import api.helpers as helpers
 import lib.constants as CONST
@@ -142,3 +143,14 @@ def get_books():
     if err:
         return helpers.failure(res='failed to retrieve local books', status=err)
     return helpers.success(books_list)
+
+
+@api.route('/contact', methods=['POST'])
+@required_params('message')
+def contact():
+    message_sent = requests.post(CONST.NTFY_URI,
+                                verify=True, allow_redirects=True,
+                                data=g.params['message'])
+    if message_sent.status_code not in range(200, 300):
+        return helpers.failure()
+    return helpers.success()

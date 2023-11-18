@@ -11,11 +11,13 @@ import 'vue-toast-notification/dist/theme-bootstrap.css';
 import Scanner from '@/components/Scanner.vue'
 import Books from '@/components/Books.vue'
 import About from '@/components/About.vue'
+import Contact from '@/components/Contact.vue'
 
 const routes = [
     { path: '/', component: Scanner },
     { path: '/books', component: Books },
     { path: '/about', component: About },
+    { path: '/contact', component: Contact },
 ]
 
 const router = createRouter({
@@ -25,6 +27,8 @@ const router = createRouter({
 
 const pinia = createPinia()
 const app = createApp(App)
+
+app.config.globalProperties.$NTFY_ENABLED = 1;
 
 app.use(pinia)
 app.use(ToastPlugin)
