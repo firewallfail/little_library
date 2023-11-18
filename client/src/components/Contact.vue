@@ -2,7 +2,7 @@
     <div class="form">
         <p>Send us a message</p>
         <textarea v-model="message" name="text" wrap="soft"> </textarea><br><br>
-        <button :disabled="message" @click="send_message">Submit</button>
+        <button :disabled="!message" @click="send_message">Submit</button>
     </div>
 </template>
 
