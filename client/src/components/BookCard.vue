@@ -13,7 +13,7 @@
             <img v-bind:src="book.thumbnail">
             <p>QTY: {{ book.count }}</p>
         </div>
-        <button @click="add_remove_book('add')">Add</button>
+        <button @click="add_remove_book('add')" style="margin-right: 1rem;">Add</button>
         <button @click="add_remove_book('remove')">Remove</button>
     </div>
 </template>
