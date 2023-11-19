@@ -6,8 +6,8 @@
         Look Up: {{ barcode }}
       </button>
     </div>
-    <div>
-      <input v-model="book_query" v-on:keyup="delayed_search_book_query" placeholder="Search Books"/>
+    <div ref="searchContainer" style="padding-top: 2rem;">
+      <input class="bookSearch" v-model="book_query" v-on:keyup="delayed_search_book_query" placeholder="Search Books"/>
     </div>
     <div v-if="book_found" v-for="book of book_list">
       <BookCard :book="book" />
@@ -33,6 +33,12 @@
         }
     },
     methods: {
+      scroll_to_search() {
+        const search = this.$refs.searchContainer
+        if (search) {
+          search.scrollIntoView({behavior: 'smooth'})
+        }
+      },
       on_scan_success(decoded_text, decoded_result) {
         this.barcode = decoded_text
         // Handle on success condition with the decoded text or result.
@@ -50,6 +56,7 @@
         const bookSearchResponse = await response.json()
         this.book_list = [bookSearchResponse.data]
         this.book_found = true
+        this.scroll_to_search()
       },
       async search_book_query() {
         const response = await fetch('/api/book/search?' + new URLSearchParams({
@@ -62,6 +69,7 @@
         const bookSearchResponse = await response.json()
         this.book_list = bookSearchResponse.data
         this.book_found = true
+        this.scroll_to_search()
       },
       delayed_search_book_query() {
         if (this.timer) {
@@ -81,16 +89,24 @@
                                                       }
                                                       );
         html5QrcodeScanner.render(this.on_scan_success);
+        this.scroll_to_search()
     }
   }
 </script>
   
-<style>
+<style scoped>
   .video {
     width: 100%;
     background-color: #F1F7ED;
     outline: 5px solid black;
     margin-bottom: 1rem;
-    border-radius: 1rem;
+  }
+
+  .bookSearch {
+    border: 5px solid #C2A83E;
+    background-color: #F1F7ED;
+    border-radius: 2rem;
+    padding: 2rem;
+    outline: none;
   }
 </style>
