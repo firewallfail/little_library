@@ -85,7 +85,7 @@ def update_book_count(db_conn, barcode, count):
     return res, None
 
 
-def get_local_books(db_conn, order_by='updated_at', offset=0, limit=50):
+def get_local_books(db_conn, offset=0, limit=50):
     try:
         offset = int(offset)
         limit = int(limit)
@@ -96,11 +96,10 @@ def get_local_books(db_conn, order_by='updated_at', offset=0, limit=50):
     query = """SELECT title, sub_title, authors, published_date, description, page_count, upc, thumbnail, count
                 FROM book
                 WHERE count >= 1
-                ORDER BY %(order_by)s DESC
+                ORDER BY updated_at DESC
                 LIMIT %(limit)s
                 OFFSET %(offset)s;"""
     params = {
-        'order_by': order_by,
         'limit': limit,
         'offset': int(offset)
     }
