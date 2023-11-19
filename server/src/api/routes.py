@@ -15,6 +15,7 @@ from flask import session
 
 from api.helpers import token_required, required_params, admin_only
 from db.db import Database
+from rate_limit import limiter
 
 api = Blueprint('api', __name__)
 db = Database()
@@ -23,6 +24,10 @@ db = Database()
 def server_error(err):
     logging.error(err)
     return helpers.failure(res='Generic server error', status_code=500)
+
+@api.errorhandler(429)
+def ratelimit_handler(e):
+    return helpers.failure(res=f"Limit exceeded: {e.description}, try again later", status_code=429)
 
 @api.before_request
 def before_request():
@@ -41,6 +46,7 @@ def teardown_request(res=''):
 
 
 @api.route('/health_check')
+@limiter.exempt
 def test():
     return helpers.success()
 
