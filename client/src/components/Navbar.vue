@@ -7,19 +7,28 @@
       <router-link to="/about">About</router-link>
       <router-link v-if="$NTFY_ENABLED" to="/contact">Contact</router-link>
     </header>
+    <SideNavbar v-if="side_nav_on" />
   </div>
+
 </template>
 
 <script>
+import SideNavbar from '@/components/SideNavbar.vue'
+
 export default {
   name: 'Navbar',
+  components: {
+    SideNavbar
+  },
   data() {
     return {
+      side_nav_on: false
     }
   },
   methods: {
     menu() {
-      this.$toast.open({message: 'Message Sent'})
+      console.log(this.side_nav_on)
+      this.side_nav_on = !this.side_nav_on
     }
   }
 }
@@ -50,10 +59,10 @@ img {
 }
 .navbar a {
     color: #f2f2f2;
-    padding-top: 1.5rem;
+    padding-top: 1.3rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1.3rem;
     text-decoration: none;
 }
 
