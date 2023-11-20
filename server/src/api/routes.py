@@ -152,6 +152,7 @@ def get_books():
 
 
 @api.route('/contact', methods=['POST'])
+@limiter.limit('3 per day')
 @required_params('message')
 def contact():
     message_sent = requests.post(CONST.NTFY_URI,
