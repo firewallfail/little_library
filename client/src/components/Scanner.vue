@@ -36,7 +36,9 @@
       scroll_to_search() {
         const search = this.$refs.searchContainer
         if (search) {
-          search.scrollIntoView({behavior: 'smooth'})
+          this.$nextTick(() => {
+            search.scrollIntoView({behavior: 'smooth'})
+          })
         }
       },
       on_scan_success(decoded_text, decoded_result) {
@@ -97,7 +99,6 @@
                                                       }
                                                       );
         html5QrcodeScanner.render(this.on_scan_success);
-        this.scroll_to_search()
     }
   }
 </script>
