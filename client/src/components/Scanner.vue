@@ -82,9 +82,17 @@
       }
     },
     mounted() {
+      let qrboxDimensions = function(viewfinderWidth, viewfinderHeight) {
+        const width = viewfinderHeight * 0.4
+        const height = width * 0.5
+        return {
+          width: width,
+          height: height
+        }
+      }
       let html5QrcodeScanner = new Html5QrcodeScanner("reader",
-                                                      { fps: 10,
-                                                        qrbox: {width: 140, height: 100},
+                                                      { fps: 2,
+                                                        qrbox: qrboxDimensions,
                                                         formatsToSupport: [ Html5QrcodeSupportedFormats.EAN_13 ]
                                                       }
                                                       );
