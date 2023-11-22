@@ -70,3 +70,7 @@ button:hover,
 button:focus {
   background-color: #7CA982;
 }
+
+button:disabled {
+    visibility: hidden;
+}
