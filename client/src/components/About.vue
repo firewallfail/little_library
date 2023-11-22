@@ -52,6 +52,41 @@
             </div>
         </Transition>
     </div>
+    <div class="about-card" @click="expand_text('compatibility')">
+        <Transition name="fade">
+            <div>
+                <p>
+                    <img class="icon" v-if="show.compatibility" src="@/icons/icons8-compress-arrow-50.png" alt="compress arrow">
+                    <img class="icon" v-if="!show.compatibility" src="@/icons/icons8-expand-arrow-50.png" alt="expand arrow">
+                    Compatibility
+                </p>
+                <div v-if="show.compatibility">
+                    <p>
+                        Chrome has built in barcode scanning on mobile which seems to have the best results. Firefox also has barcode scanning
+                        built in but it seems to be less reliable. Safari hasn't been tested yet so that's in the air. Scanning from a computer
+                        is very unreliable and manual search is likely faster and easier.
+                    </p>
+                </div>
+            </div>
+        </Transition>
+    </div>
+    <div class="about-card" @click="expand_text('url')">
+        <Transition name="fade">
+            <div>
+                <p>
+                    <img class="icon" v-if="show.url" src="@/icons/icons8-compress-arrow-50.png" alt="compress arrow">
+                    <img class="icon" v-if="!show.url" src="@/icons/icons8-expand-arrow-50.png" alt="expand arrow">
+                    URL
+                </p>
+                <div v-if="show.url">
+                    <p>
+                        I bought the domain as a joke, at this point I'm too invested in it to bother migrating
+                        everything to a more sensible domain.
+                    </p>
+                </div>
+            </div>
+        </Transition>
+    </div>
     <p class="icons-8">Icons by <a class="link-text" href="https://icons8.com/">Icons8</a></p>
 </template>
 
