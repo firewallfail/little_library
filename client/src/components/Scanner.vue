@@ -43,8 +43,6 @@
       },
       on_scan_success(decoded_text, decoded_result) {
         this.barcode = decoded_text
-        // Handle on success condition with the decoded text or result.
-        console.log(`Scan result: ${decoded_text}`);
       },
       async search_book_barcode() {
         const response = await fetch(`/api/book/scan/${this.barcode}`, {
