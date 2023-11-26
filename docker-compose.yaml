@@ -21,6 +21,7 @@ services:
 
   server: #Hostname
     container_name: little_library
+    image: firewallfaild/little_library_server
     build: ./server
     ports:
       - "8000:5000"
@@ -48,6 +49,7 @@ services:
 
   client: #Hostname
     container_name: little_library_client
+    image: firewallfaild/little_library_client
     build: ./client
     ports:
       - "${PORT}:${PORT}"
