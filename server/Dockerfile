@@ -3,15 +3,22 @@ FROM python:3.9-alpine
 
 # copy the requirements file into the image
 COPY ./src ./app
+# switch working directory
 WORKDIR /app
 
-# switch working directory
 RUN adduser -D little_library
 
 # install mysql dependencies
 RUN apk update \
-    && apk add --virtual build-deps gcc python3-dev musl-dev libpq-dev \
-    && apk add --no-cache mariadb-dev && apk add curl
+    && apk add --virtual build-deps \
+    gcc \
+    python3-dev \
+    musl-dev \
+    libpq-dev \
+    mariadb-dev \
+    curl \
+    linux-headers\
+    libc-dev
 
 # install the dependencies and packages in the requirements file
 RUN pip install -r ./conf/requirements.txt
