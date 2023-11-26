@@ -2,7 +2,7 @@
 FROM python:3.9-alpine
 
 # copy the requirements file into the image
-COPY ./src ./app
+COPY ../server/src ./app
 # switch working directory
 WORKDIR /app
 

@@ -6,11 +6,11 @@ RUN apk update \
     && apk add nginx
 # copy 'package.json' to install dependencies
 COPY package*.json ./
-COPY /src/conf/nginx/* /etc/nginx/http.d/default.conf
+COPY ../client/src/conf/nginx/* /etc/nginx/http.d/default.conf
 # install dependencies
 RUN npm install
 # copy files and folders to the current working directory (i.e. 'app' folder)
-COPY . .
+COPY ../client .
 # build app for production with minification
 RUN npm run build
 
