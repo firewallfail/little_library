@@ -5,7 +5,7 @@ WORKDIR /app
 RUN apk update \
     && apk add nginx
 # copy 'package.json' to install dependencies
-COPY package*.json ./
+COPY ../client/package*.json ./
 COPY ../client/src/conf/nginx/* /etc/nginx/http.d/default.conf
 # install dependencies
 RUN npm install
