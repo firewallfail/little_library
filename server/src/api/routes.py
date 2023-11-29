@@ -27,6 +27,7 @@ def server_error(err):
 
 @api.errorhandler(429)
 def ratelimit_handler(e):
+    logging.error(f"rate limit error: {e}")
     return helpers.failure(res=f"Limit exceeded: {e.description}, try again later", status_code=429)
 
 @api.before_request

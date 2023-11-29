@@ -1,6 +1,8 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
-import os
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from api import routes
 from rate_limit import limiter
@@ -10,6 +12,8 @@ app.register_blueprint(routes.api, url_prefix='/api')
 app.config.update(
     SECRET_KEY = 'devkey'
 )
+
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)
 
 limiter.init_app(app)
 CORS(app)
