@@ -2,7 +2,8 @@ import os
 
 from flask import Flask
 from flask_cors import CORS
-# from werkzeug.middleware.proxy_fix import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
+from logging.config import dictConfig
 
 from api import routes
 from rate_limit import limiter
@@ -13,7 +14,22 @@ app.config.update(
     SECRET_KEY = 'devkey'
 )
 
-# app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['wsgi']
+    }
+})
 
 limiter.init_app(app)
 CORS(app)
