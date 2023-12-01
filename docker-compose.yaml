@@ -27,11 +27,6 @@ services:
       - "8000:5000"
     volumes:
       - ./server/src:/app
-    healthcheck:
-      test: "curl localhost:5000/api/health_check"
-      interval: 20s
-      timeout: 10s
-      retries: 5
     environment:
       DB_USERNAME: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
@@ -63,9 +58,7 @@ services:
       DEPLOY_ENV: ${DEPLOY_ENV}
     restart: unless-stopped
     depends_on:
-      server:
-        condition: service_healthy
-        restart: true
+      - server
 
 volumes:
   dev_db:
