@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     menu() {
-      console.log(this.side_nav_on)
       this.side_nav_on = !this.side_nav_on
     }
   }
