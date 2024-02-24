@@ -50,7 +50,7 @@ class Database:
         except Exception as e:
             logging.error(f"Exception writing to db: {e}")
             return
-        return result      
+        return result
 
     def read_db(self, conn, query, params, only_one=False):
         """Reads from db 
